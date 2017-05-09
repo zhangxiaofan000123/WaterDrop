@@ -39,7 +39,7 @@ public class CoverManager {
     }
 
     public void start(View target, float x, float y, DropCover.OnDragCompeteListener onDragCompeteListener) {
-        if (mDropCover != null && mDropCover.getParent() != null) {
+        if (mDropCover == null && mDropCover.getParent() == null) {
             return;
         } else {
             mDropCover.setOnDragCompeteListener(onDragCompeteListener);
