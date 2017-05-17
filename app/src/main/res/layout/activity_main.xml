@@ -20,7 +20,7 @@
             app:text="88"
             app:textColor="@color/white"
             app:textPadding="2dp"
-            app:textSize="24sp">
+            app:textSize="12sp">
 
         </com.view.drop.WaterDrop>
     </LinearLayout>

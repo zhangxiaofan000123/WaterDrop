@@ -85,7 +85,7 @@ public class WaterDrop extends RelativeLayout {
         mTextView.setPadding(paddingPixels, 0, paddingPixels, 0);
         mTextView.setTypeface(Typeface.DEFAULT_BOLD);
         mTextView.setTextColor(textColor);
-        mTextView.setTextSize(px2sp(context,textSize));
+        mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX ,textSize );
         mTextView.setLayoutParams(params);
         addView(mTextView);
 
