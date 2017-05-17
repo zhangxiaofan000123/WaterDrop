@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         CoverManager.getInstance().setExplosionTime(150);
         WaterDrop waterDrop = (WaterDrop) findViewById(R.id.wd);
         waterDrop.setCanMove(true);
+        waterDrop.setText("234");
         waterDrop.setOnDragCompeteListener(new DropCover.OnDragCompeteListener() {
             @Override
             public void onDrag() {

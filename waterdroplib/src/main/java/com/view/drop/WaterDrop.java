@@ -58,7 +58,7 @@ public class WaterDrop extends RelativeLayout {
         mTextView.setTextSize(size);
     }
 
-   public static int bgColor = 0xcf00;
+   public static int bgColor = 0xf00;
     int textColor = 0xfff;
     int textSize = 14;
     private String text;
@@ -71,7 +71,7 @@ public class WaterDrop extends RelativeLayout {
         }
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.WaterDrop);
-            bgColor = ta.getColor(R.styleable.WaterDrop_bgColor, 0xcf00);
+            bgColor = ta.getColor(R.styleable.WaterDrop_bgColor, 0xf00);
             textColor = ta.getColor(R.styleable.WaterDrop_textColor, 0xfff);
             DEFAULT_LR_PADDING_DIP = (int) ta.getDimension(R.styleable.WaterDrop_textPadding, 5);
             text = ta.getString(R.styleable.WaterDrop_text);
