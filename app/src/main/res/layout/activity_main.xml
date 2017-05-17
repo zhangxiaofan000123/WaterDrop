@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.tongjin.waterdrop.MainActivity">
+
+    <com.view.drop.WaterDrop
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:text="88"
+        app:textSize="55sp"
+        app:textPadding="2dp"
+        app:bgColor="@color/colorAccent"
+        app:textColor="@color/white">
+
+    </com.view.drop.WaterDrop>
+</LinearLayout>

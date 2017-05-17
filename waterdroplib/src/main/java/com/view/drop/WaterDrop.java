@@ -3,6 +3,7 @@ package com.view.drop;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -24,17 +25,16 @@ public class WaterDrop extends RelativeLayout {
     private TextView mTextView;
     private DropCover.OnDragCompeteListener mOnDragCompeteListener;
     private boolean mHolderEventFlag;
-    private static final int DEFAULT_LR_PADDING_DIP = 5;
-    private static final int DEFAULT_CORNER_RADIUS_DIP = 8;
+    private static int DEFAULT_LR_PADDING_DIP = 5;
+    private static int DEFAULT_CORNER_RADIUS_DIP = 8;
 
     public WaterDrop(Context context) {
-        super(context);
-        init();
+        this(context, null);
     }
 
     public WaterDrop(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context, attrs);
     }
 
     public void setText(String str) {
@@ -58,30 +58,45 @@ public class WaterDrop extends RelativeLayout {
         mTextView.setTextSize(size);
     }
 
+    int bgColor=0xcf00;
+    int textColor = 0xfff;
+    int textSize = 14;
+    private String text;
+
     @SuppressLint("NewApi")
-    private void init() {
+    private void init(Context context, AttributeSet attrs) {
         mPaint.setAntiAlias(true);
         if (VERSION.SDK_INT > 11) {
             setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
-
-        mTextView = new TextView(getContext(), null, android.R.attr.textViewStyle);
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.WaterDrop);
+            bgColor = ta.getColor(R.styleable.WaterDrop_bgColor, 0xcf00);
+            textColor = ta.getColor(R.styleable.WaterDrop_textColor, 0xfff);
+            DEFAULT_LR_PADDING_DIP = (int) ta.getDimension(R.styleable.WaterDrop_textPadding, 5);
+            text = ta.getString(R.styleable.WaterDrop_text);
+            textSize = ta.getDimensionPixelSize(R.styleable.WaterDrop_textSize, 14);
+        }
+        mTextView = new TextView(getContext());
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         int paddingPixels = dipToPixels(DEFAULT_LR_PADDING_DIP);
-        mTextView.setPadding(paddingPixels, 0, paddingPixels, 0);
+        mTextView.setPadding(paddingPixels, paddingPixels, paddingPixels, paddingPixels);
         mTextView.setTypeface(Typeface.DEFAULT_BOLD);
-        mTextView.setTextColor(0xffffffff);
+        mTextView.setTextColor(textColor);
+        mTextView.setTextSize(textSize);
         mTextView.setLayoutParams(params);
         addView(mTextView);
+
         this.setVisibility(GONE);
+        setText(text);
     }
 
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
 
-        mPaint.setColor(0xCCFF0000);
+        mPaint.setColor(bgColor);
         int r = dipToPixels(DEFAULT_CORNER_RADIUS_DIP);
         RectF rectF = new RectF(0, 0, getWidth(), getHeight());
         canvas.drawRoundRect(rectF, r, r, mPaint);
@@ -113,7 +128,7 @@ public class WaterDrop extends RelativeLayout {
             case MotionEvent.ACTION_DOWN:
                 mHolderEventFlag = !CoverManager.getInstance().isRunning();
                 if (mHolderEventFlag) {
-                    if(parent!=null)
+                    if (parent != null)
                         parent.requestDisallowInterceptTouchEvent(true);
                     CoverManager.getInstance().start(this, event.getRawX(), event.getRawY(), mOnDragCompeteListener);
                 }
