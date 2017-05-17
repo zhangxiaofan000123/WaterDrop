@@ -73,7 +73,7 @@ public class DropCover extends SurfaceView implements SurfaceHolder.Callback {
 
             if (isDraw) {
                 double distance = Math.sqrt(Math.pow(mBaseX - mTargetX, 2) + Math.pow(mBaseY - mTargetY, 2));
-                mPaint.setColor(0xffff0000);
+                mPaint.setColor(WaterDrop.bgColor);
                 canvas.drawCircle(mBaseX, mBaseY, mStrokeWidth, mPaint);
                 if (distance < mMaxDistance) {
                     mStrokeWidth = (float) ((1 - distance / mMaxDistance) * 25);

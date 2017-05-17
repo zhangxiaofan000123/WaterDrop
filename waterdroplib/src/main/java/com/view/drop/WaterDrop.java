@@ -58,7 +58,7 @@ public class WaterDrop extends RelativeLayout {
         mTextView.setTextSize(size);
     }
 
-    int bgColor=0xcf00;
+   public static int bgColor = 0xcf00;
     int textColor = 0xfff;
     int textSize = 14;
     private String text;
@@ -76,20 +76,22 @@ public class WaterDrop extends RelativeLayout {
             DEFAULT_LR_PADDING_DIP = (int) ta.getDimension(R.styleable.WaterDrop_textPadding, 5);
             text = ta.getString(R.styleable.WaterDrop_text);
             textSize = ta.getDimensionPixelSize(R.styleable.WaterDrop_textSize, 14);
+            ta.recycle();
         }
         mTextView = new TextView(getContext());
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         int paddingPixels = dipToPixels(DEFAULT_LR_PADDING_DIP);
-        mTextView.setPadding(paddingPixels, paddingPixels, paddingPixels, paddingPixels);
+        mTextView.setPadding(paddingPixels, 0, paddingPixels, 0);
         mTextView.setTypeface(Typeface.DEFAULT_BOLD);
         mTextView.setTextColor(textColor);
-        mTextView.setTextSize(textSize);
+        mTextView.setTextSize(px2sp(context,textSize));
         mTextView.setLayoutParams(params);
         addView(mTextView);
 
         this.setVisibility(GONE);
         setText(text);
+
     }
 
 
@@ -174,5 +176,15 @@ public class WaterDrop extends RelativeLayout {
         Resources r = getResources();
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, r.getDisplayMetrics());
         return (int) px;
+    }
+    /**
+     * 将px值转换为sp值，保证文字大小不变
+     *
+     * @param pxValue （DisplayMetrics类中属性scaledDensity）
+     * @return
+     */
+    public static int px2sp(Context context, float pxValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (pxValue / fontScale + 0.5f);
     }
 }
